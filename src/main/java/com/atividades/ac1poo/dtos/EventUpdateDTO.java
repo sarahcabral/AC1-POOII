@@ -5,11 +5,9 @@ import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class EventInsertDTO {
-
+public class EventUpdateDTO {
     private String name;
     private String description;
-    private String place;
     
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startDate;
@@ -19,11 +17,9 @@ public class EventInsertDTO {
     
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
-
+    
     @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
-    
-    private String emailContact;
     
     public String getName() {
         return name;
@@ -36,12 +32,6 @@ public class EventInsertDTO {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-    public String getPlace() {
-        return place;
-    }
-    public void setPlace(String place) {
-        this.place = place;
     }
     public LocalDate getStartDate() {
         return startDate;
@@ -67,10 +57,5 @@ public class EventInsertDTO {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-    public String getEmailContact() {
-        return emailContact;
-    }
-    public void setEmailContact(String emailContact) {
-        this.emailContact = emailContact;
-    }
+        
 }

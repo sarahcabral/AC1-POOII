@@ -1,19 +1,31 @@
 package com.atividades.ac1poo.dtos;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import com.atividades.ac1poo.entities.Event;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class EventDTO {
     
     private Long   id;
     private String name;
     private String description;
-    private String startDate;
-    private String endDate;
-    private String startTime;
-    private String endTime;
+    
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate startDate;
+    
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate endDate;
+    
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime startTime;
 
-    public EventDTO(Long id, String name, String description, String startDate, String endDate,
-    String startTime, String endTime) {
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime endTime;
+
+    public EventDTO(Long id, String name, String description, LocalDate startDate, LocalDate endDate,
+    LocalTime startTime, LocalTime endTime) {
         setId(id);
         setName(name);
         setDescription(description);
@@ -55,28 +67,28 @@ public class EventDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
     

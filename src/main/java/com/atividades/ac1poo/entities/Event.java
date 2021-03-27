@@ -1,6 +1,8 @@
 package com.atividades.ac1poo.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.atividades.ac1poo.dtos.EventInsertDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="TB_EVENT")
@@ -23,10 +26,14 @@ public class Event implements Serializable {
     private String name;
     private String description;
     private String place;
-    private String startDate;
-    private String endDate;
-    private String startTime;
-    private String endTime;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate startDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate endDate;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime startTime;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime endTime;
     private String emailContact;
     
     public Event(EventInsertDTO insertDTO) {
@@ -75,35 +82,35 @@ public class Event implements Serializable {
         this.place = place;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

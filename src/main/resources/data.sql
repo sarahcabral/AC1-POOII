@@ -1,2 +1,2 @@
-INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description, place) VALUES ('null', 'null', 'null', 'null', 'servico@etec.sp.gov.br', 'Formatura', 'Formandos da ETEC', 'Rua XV, 1212 – Sorocaba/SP');
-INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description, place) VALUES ('null', 'null', 'null', 'null', 'maria@email.com','15 anos', 'Aniversário da Maria', 'Rua Tereza, 23 – Sorocaba/SP');
+INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description, place) VALUES ('2022-10-08', '2022-11-08', '16:00', '03:00', 'servico@etec.sp.gov.br', 'Formatura', 'Formandos da ETEC', 'Rua XV, 1212 – Sorocaba/SP');
+INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description, place) VALUES ('2021-10-02', '2021-10-02', '07:00', '22:30', 'maria@email.com','15 anos', 'Aniversário da Maria', 'Rua Tereza, 23 – Sorocaba/SP');
