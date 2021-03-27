@@ -13,6 +13,7 @@ import com.atividades.ac1poo.entities.Event;
 import com.atividades.ac1poo.repositories.EventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -61,6 +62,14 @@ public class EventService {
             entity = repo.save(entity);
             return new EventDTO(entity);
         } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found");
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            repo.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found");
         }
     }
