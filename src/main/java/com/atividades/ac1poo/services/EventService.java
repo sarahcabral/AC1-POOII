@@ -1,5 +1,7 @@
 package com.atividades.ac1poo.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -8,6 +10,7 @@ import com.atividades.ac1poo.dtos.EventInsertDTO;
 import com.atividades.ac1poo.dtos.EventUpdateDTO;
 import com.atividades.ac1poo.entities.Event;
 import com.atividades.ac1poo.repositories.EventRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -22,24 +25,23 @@ public class EventService {
     @Autowired
     private EventRepository repo;
 
-    public Page<EventDTO> getEvents(PageRequest pageRequest) {
-        Page<Event> list = repo.find(pageRequest);
-        
-        return list.map( e -> new EventDTO(e));
+    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String date) {
+         
+        if (date.isEmpty()) {
+            Page<Event> list = repo.find(pageRequest, name, place, description);
+            return list.map( e -> new EventDTO(e));
+        } else {
+            try {         
+                LocalDate startDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+                Page<Event> list = repo.find(pageRequest, name, place, description, startDate);
+                return list.map( e -> new EventDTO(e));
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'yyyy-MM-dd'");
+            }
+            
+        }       
     }
     
-    
-    
-    /*
-    private List<EventDTO> toDTOList(List<Event> list) {
-        List<EventDTO> listDTO = new ArrayList<>();
-
-        for (Event e : list) {
-            listDTO.add(new EventDTO(e.getId(),e.getName(),e.getDescription(),e.getStartDate(),e.getEndDate(),e.getStartTime(),e.getEndTime()));
-        }
-        return listDTO;
-    }
-    */
     public EventDTO getEventById(Long id) {
         Optional<Event> op = repo.findById(id);
         Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
@@ -52,15 +54,14 @@ public class EventService {
         {
             entity = repo.save(entity);
             return new EventDTO(entity);
-        } /* else if(entity.getEndDate().isEqual(entity.getStartDate()))
-        {
-            if(entity.getEndTime().isAfter(entity.getStartTime()))
-            {
-
-            }
-        } */ else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Data final do evento deve ser posterior a inicial");          
+        } else if(   (   entity.getEndDate().isEqual(entity.getStartDate())   ) && (   entity.getEndTime().isAfter(entity.getStartTime())   )   ){
+            entity = repo.save(entity);
+            return new EventDTO(entity);
         } 
+        else 
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Data final do evento deve ser posterior a inicial");         
+
+        
     }
 
     public EventDTO update(Long id, EventUpdateDTO updateDTO) {
@@ -76,7 +77,7 @@ public class EventService {
             return new EventDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found");
-        }// catch ()
+        }
     }
 
     public void delete(Long id) {
@@ -87,6 +88,16 @@ public class EventService {
         }
     }
 
+    /*
+    private List<EventDTO> toDTOList(List<Event> list) {
+        List<EventDTO> listDTO = new ArrayList<>();
+
+        for (Event e : list) {
+            listDTO.add(new EventDTO(e.getId(),e.getName(),e.getDescription(),e.getStartDate(),e.getEndDate(),e.getStartTime(),e.getEndTime()));
+        }
+        return listDTO;
+    }
+    */
 
 
 
