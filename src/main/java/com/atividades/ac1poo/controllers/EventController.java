@@ -39,10 +39,10 @@ public class EventController {
         @RequestParam(value = "name",         defaultValue = "") String name, 
         @RequestParam(value = "place",        defaultValue = "") String place, 
         @RequestParam(value = "description",  defaultValue = "") String description, 
-        @RequestParam(value = "startDate",    defaultValue = "") String date
+        @RequestParam(value = "startDate",    defaultValue = "") String startDate
     ) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-        Page <EventDTO> list = service.getEvents(pageRequest, name.trim(), place.trim(), description.trim(), date);
+        Page <EventDTO> list = service.getEvents(pageRequest, name.trim(), place.trim(), description.trim(), startDate);
         return ResponseEntity.ok().body(list);
     }
 
@@ -70,6 +70,4 @@ public class EventController {
 		service.delete(id); 
 		return ResponseEntity.noContent().build();
 	}
-
-
 }

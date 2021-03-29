@@ -10,7 +10,6 @@ import com.atividades.ac1poo.dtos.EventInsertDTO;
 import com.atividades.ac1poo.dtos.EventUpdateDTO;
 import com.atividades.ac1poo.entities.Event;
 import com.atividades.ac1poo.repositories.EventRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -25,20 +24,21 @@ public class EventService {
     @Autowired
     private EventRepository repo;
 
-    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String date) {
+    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String data) {
          
-        if (date.isEmpty()) {
+        if (data.isEmpty() || (data.length() < 1)) {
             Page<Event> list = repo.find(pageRequest, name, place, description);
             return list.map( e -> new EventDTO(e));
         } else {
             try {         
-                LocalDate startDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+                //LocalDate startDate = LocalDate.parse(data, DateTimeFormatter.ISO_DATE);
+                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
+                LocalDate startDate = LocalDate.parse(data, formato); 
                 Page<Event> list = repo.find(pageRequest, name, place, description, startDate);
                 return list.map( e -> new EventDTO(e));
             } catch (Exception e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'yyyy-MM-dd'");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'dd-MM-yyyy'");
             }
-            
         }       
     }
     
@@ -54,14 +54,12 @@ public class EventService {
         {
             entity = repo.save(entity);
             return new EventDTO(entity);
-        } else if(   (   entity.getEndDate().isEqual(entity.getStartDate())   ) && (   entity.getEndTime().isAfter(entity.getStartTime())   )   ){
+        } else if((entity.getEndDate().isEqual(entity.getStartDate())) && (entity.getEndTime().isAfter(entity.getStartTime())   )){
             entity = repo.save(entity);
             return new EventDTO(entity);
         } 
         else 
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Data final do evento deve ser posterior a inicial");         
-
-        
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Data final do evento deve ser posterior a inicial");
     }
 
     public EventDTO update(Long id, EventUpdateDTO updateDTO) {
@@ -77,6 +75,8 @@ public class EventService {
             return new EventDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found");
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'yyyy-MM-dd'"); 
         }
     }
 
@@ -98,7 +98,4 @@ public class EventService {
         return listDTO;
     }
     */
-
-
-
 }
