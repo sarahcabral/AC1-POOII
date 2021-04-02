@@ -1,9 +1,7 @@
 package com.atividades.ac1poo.repositories;
 
 import java.time.LocalDate;
-
 import com.atividades.ac1poo.entities.Event;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,6 +27,4 @@ public interface EventRepository extends JpaRepository <Event,Long> {
             "( LOWER(e.description) LIKE LOWER(CONCAT('%', :description, '%')))" 
     )
     public Page<Event> find(Pageable pageRequest, String name, String place, String description);
-
-
 }

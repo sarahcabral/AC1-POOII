@@ -3,13 +3,11 @@ package com.atividades.ac1poo.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import com.atividades.ac1poo.dtos.EventInsertDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -152,7 +150,5 @@ public class Event implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
-    }
-
-    
+    }  
 }

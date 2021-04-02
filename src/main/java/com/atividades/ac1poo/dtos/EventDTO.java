@@ -2,7 +2,6 @@ package com.atividades.ac1poo.dtos;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 import com.atividades.ac1poo.entities.Event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 

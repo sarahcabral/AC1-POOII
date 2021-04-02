@@ -1,7 +1,6 @@
 package com.atividades.ac1poo.controllers;
 
 import java.net.URI;
-
 import com.atividades.ac1poo.dtos.EventDTO;
 import com.atividades.ac1poo.dtos.EventInsertDTO;
 import com.atividades.ac1poo.dtos.EventUpdateDTO;

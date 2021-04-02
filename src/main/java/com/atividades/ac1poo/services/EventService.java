@@ -74,7 +74,7 @@ public class EventService {
             entity = repo.save(entity);
             return new EventDTO(entity);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'dd-MM-yyyy'"); 
         }
@@ -84,7 +84,7 @@ public class EventService {
         try {
             repo.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }
     }
 
