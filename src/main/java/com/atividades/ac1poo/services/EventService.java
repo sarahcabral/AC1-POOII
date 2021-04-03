@@ -3,7 +3,6 @@ package com.atividades.ac1poo.services;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
 import javax.persistence.EntityNotFoundException;
 import com.atividades.ac1poo.dtos.EventDTO;
 import com.atividades.ac1poo.dtos.EventInsertDTO;
@@ -65,14 +64,22 @@ public class EventService {
     public EventDTO update(Long id, EventUpdateDTO updateDTO) {
         try {
             Event entity = repo.getOne(id);
-            entity.setName(updateDTO.getName());
-            entity.setDescription(updateDTO.getDescription());
-            entity.setEndDate(updateDTO.getEndDate());
-            entity.setEndTime(updateDTO.getEndTime());
-            entity.setStartDate(updateDTO.getStartDate());
-            entity.setStartTime(updateDTO.getStartTime());
+            if(!updateDTO.getName().isEmpty())       
+                entity.setName(updateDTO.getName());
+            if(!updateDTO.getDescription().isEmpty()) 
+                entity.setDescription(updateDTO.getDescription());
+            if(updateDTO.getStartDate() != null) 
+                entity.setStartDate(updateDTO.getStartDate());
+            if(updateDTO.getEndDate() != null) 
+                entity.setEndDate(updateDTO.getEndDate());
+            if(updateDTO.getStartTime() != null) 
+                entity.setStartTime(updateDTO.getStartTime());
+            if(updateDTO.getEndTime() != null) 
+                entity.setEndTime(updateDTO.getEndTime());
+              
             entity = repo.save(entity);
             return new EventDTO(entity);
+
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         } catch (Exception e) {
