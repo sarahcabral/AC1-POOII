@@ -27,4 +27,4 @@
 * Publicação no Heroku: 1 Ponto usando o PostgreSQL.
 * Arquitetura em Camadas Usando DTOs - 1 ponto.
   
-![image](https://user-images.githubusercontent.com/70850413/117082375-7a715480-ad18-11eb-92cf-7c5b931d8416.png)
+        ![image](https://user-images.githubusercontent.com/70850413/117082375-7a715480-ad18-11eb-92cf-7c5b931d8416.png)
