@@ -1,56 +1,91 @@
 package com.atividades.ac1poo.dtos;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import com.atividades.ac1poo.entities.Event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import com.atividades.ac1poo.entities.Admin;
+import com.atividades.ac1poo.entities.Event;
+
 public class EventDTO {
-    
-    private Long   id;
+
+    /**
+     * ------------
+     * @Declaration
+     * ------------
+     */ 
+    private Long id;
+    private Admin admin;
     private String name;
     private String description;
-    
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startDate;
-    
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDate;
-    
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
-
     @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
+    private String emailContact;
+    private Long amountFreeTickets;
+    private Long amountPayedTickets;
+    private Double priceTicket;
 
-    public EventDTO(Long id, String name, String description, LocalDate startDate, LocalDate endDate,
-    LocalTime startTime, LocalTime endTime) {
-        setId(id);
-        setName(name);
-        setDescription(description);
-        setStartDate(startDate);
-        setEndDate(endDate);
-        setStartTime(startTime);
-        setEndTime(endTime);
+    /**
+     * -------------
+     * @Constructors
+     * -------------
+     */
+    public EventDTO(){}
+
+    public EventDTO(Long id, Admin admin, String name, String description, LocalDate startDate, LocalDate endDate,
+    LocalTime startTime, LocalTime endTime, String emailContact, Long amountFreeTickets,
+    Long amountPayedTickets, Double priceTicket) {
+        this.id = id;
+        this.admin = admin;
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.emailContact = emailContact;
+        this.amountFreeTickets = amountFreeTickets;
+        this.amountPayedTickets = amountPayedTickets;
+        this.priceTicket = priceTicket;
     }
 
-    public EventDTO(Event event) {
-        setId(event.getId());
+    public EventDTO(Event event){
         setName(event.getName());
+        // setAdmin(event.getAdmin());
         setDescription(event.getDescription());
         setStartDate(event.getStartDate());
         setEndDate(event.getEndDate());
         setStartTime(event.getStartTime());
         setEndTime(event.getEndTime());
-
+        setEmailContact(event.getEmailContact());
+        setAmountFreeTickets(event.getAmountFreeTickets());
+        setAmountPayedTickets(event.getAmountPayedTickets());
+        setPriceTicket(event.getPriceTicket());
     }
-    
-    public EventDTO() {
-    }
+    /**
+     * ------------------
+     * @GettersAndSetters
+     * ------------------
+     */
     
     public Long getId() {
         return id;
     }
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -90,5 +125,30 @@ public class EventDTO {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-    
+    public String getEmailContact() {
+        return emailContact;
+    }
+    public void setEmailContact(String emailContact) {
+        this.emailContact = emailContact;
+    }
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
+    }
+   
+
 }

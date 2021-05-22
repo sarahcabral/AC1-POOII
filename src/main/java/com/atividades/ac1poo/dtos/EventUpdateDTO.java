@@ -1,25 +1,39 @@
 package com.atividades.ac1poo.dtos;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import com.atividades.ac1poo.entities.Admin;
+import com.atividades.ac1poo.entities.Event;
+
 public class EventUpdateDTO {
+
+    /**
+     * ------------
+     * @Declaration
+     * ------------
+     */
     private String name;
     private String description;
-    
+    private Long idPlace;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startDate;
-    
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDate;
-    
     @JsonFormat(pattern = "HH:mm")
     private LocalTime startTime;
-    
     @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
-    
+    private Long amountFreeTickets;
+    private Long amountPayedTickets;
+    private Double priceTicket;
+    /**
+     * ------------------
+     * @GettersAndSetters
+     * ------------------
+     */
     public String getName() {
         return name;
     }
@@ -31,6 +45,12 @@ public class EventUpdateDTO {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public Long getIdPlace() {
+        return idPlace;
+    }
+    public void setIdPlace(Long idPlace) {
+        this.idPlace = idPlace;
     }
     public LocalDate getStartDate() {
         return startDate;
@@ -56,5 +76,23 @@ public class EventUpdateDTO {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-        
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
+    }
+
 }
