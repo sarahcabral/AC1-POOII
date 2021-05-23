@@ -2,6 +2,8 @@ package com.atividades.ac1poo.services;
 
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,25 +18,12 @@ public class PlaceService{
    
     @Autowired
     private PlaceRepository placeRepository;
-/*
-    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String data) {
+
+    public Page<PlaceDTO> getPlace(PageRequest pageRequest, String name, String address) {
          
-        if (data.isEmpty() || (data.length() < 1)) {
-            Page<Event> list = repo.find(pageRequest, name, place, description);
-            return list.map( e -> new EventDTO(e));
-        } else {
-            try {         
-                //LocalDate startDate = LocalDate.parse(data, DateTimeFormatter.ISO_DATE);
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
-                LocalDate startDate = LocalDate.parse(data, formato); 
-                Page<Event> list = repo.find(pageRequest, name, place, description, startDate);
-                return list.map( e -> new EventDTO(e));
-            } catch (Exception e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'dd-MM-yyyy'");
-            }
-        }       
+        Page<Place> list = placeRepository.find(pageRequest, name, address);
+        return list.map( e -> new PlaceDTO(e));  
     }
-*/
 
     public PlaceDTO getPlaceById(Long id) {
         Optional<Place> op = placeRepository.findById(id);

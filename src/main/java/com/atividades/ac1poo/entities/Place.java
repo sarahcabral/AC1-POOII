@@ -45,9 +45,6 @@ public class Place implements Serializable{
      * @GettersAndSetters
      * ------------------
      */
-    public String getAddress() {
-        return address;
-    }
     public Long getId() {
         return id;
     }
@@ -59,6 +56,9 @@ public class Place implements Serializable{
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public String getAddress() {
+        return address;
     }
     public void setAddress(String address) {
         this.address = address;
