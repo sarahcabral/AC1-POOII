@@ -12,10 +12,10 @@ import com.atividades.ac1poo.dtos.*;
 import java.util.Optional;
 
 @Service
-public class TicketService{      
+public class PlaceService{      
    
     @Autowired
-    private TicketRepository ticketRepository;
+    private PlaceRepository placeRepository;
 /*
     public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String data) {
          
@@ -36,34 +36,34 @@ public class TicketService{
     }
 */
 
-    public TicketDTO getTicketById(Long id) {
-        Optional<Ticket> op = ticketRepository.findById(id);
-        Ticket ticket = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found anywhere. It may never have been scheduled"));
-        return new TicketDTO(ticket);
-    } 
+    public PlaceDTO getPlaceById(Long id) {
+        Optional<Place> op = placeRepository.findById(id);
+        Place Place = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found anywhere. It may never have been scheduled"));
+        return new PlaceDTO(Place);
+    }
 
-    public TicketDTO insert(TicketInsertDTO insertDTO){
-        Ticket entity = new Ticket(insertDTO);
-        ticketRepository.save(entity);
-        return new TicketDTO(entity);
+    public PlaceDTO insert(PlaceInsertDTO insertDTO){
+        Place entity = new Place(insertDTO);
+        placeRepository.save(entity);
+        return new PlaceDTO(entity);
     }
     
     public void delete(Long id) {
         try{
-            Ticket ticket = catchTicketById(id);
-            ticketRepository.delete(ticket);
+            Place Place = catchPlaceById(id);
+            placeRepository.delete(Place);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
         }  catch (EmptyResultDataAccessException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
         }
     }
-    private Ticket catchTicketById(Long id){
+    private Place catchPlaceById(Long id){
         try{
-            Ticket tkt = ticketRepository.getOne(id);
-            return tkt;
+            Place place = placeRepository.getOne(id);
+            return place;
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERROR"); 
         }

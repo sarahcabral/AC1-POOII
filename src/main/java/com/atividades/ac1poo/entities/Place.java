@@ -1,10 +1,13 @@
 package com.atividades.ac1poo.entities;
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.atividades.ac1poo.dtos.PlaceInsertDTO;
+
 import java.util.*;
 
 @Entity
-@Table(name="TB_PLACES")
+@Table(name="TB_PLACE")
 public class Place implements Serializable{
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +35,10 @@ public class Place implements Serializable{
     public Place(Long id, String name, String address){
         this.name = name;
         this.address = address;
+    }
+    public Place(PlaceInsertDTO insertDTO){
+        setName(insertDTO.getName());
+        setAddress(insertDTO.getAddress());
     }
     /**
      * ------------------

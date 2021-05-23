@@ -4,7 +4,7 @@ import javax.persistence.*;
 import com.atividades.ac1poo.dtos.AttendInsertDTO;
 
 @Entity
-@Table(name="TB_ATTENDEES")
+@Table(name="TB_ATTEND")
 @PrimaryKeyJoinColumn(name="ID")
 public class Attend extends BaseUser{
 
