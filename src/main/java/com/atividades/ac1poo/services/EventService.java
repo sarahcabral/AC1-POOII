@@ -62,18 +62,21 @@ public class EventService{
     public EventDTO insert(EventInsertDTO insertDTO){
         if((adminRepository.findById(insertDTO.getIdAdmin())) != null){
             // Optional<Admin> opAdmin = adminRepository.findById(insertDTO.getIdAdmin());
-            // Admin adm = opAdmin.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown error..."));
-            Admin adm = adminRepository.getOne(insertDTO.getIdAdmin());            
-            Event entity = new Event(insertDTO, adm);
-            if(entity.getEndDate().isAfter(entity.getStartDate())){
-                entity = eventRepository.save(entity);
-                return new EventDTO(entity);
-            }else if((entity.getEndDate().isEqual(entity.getStartDate())) && (entity.getEndTime().isAfter(entity.getStartTime())   )){
-                entity = eventRepository.save(entity);
-                return new EventDTO(entity);
+            // Admin adm = opAdmin.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown error..."));         
+            Event entity = new Event(insertDTO, getAdminById(insertDTO.getIdAdmin()), getPlaceById(insertDTO.getIdPlace()));
+            
+            if(entity.getEndDate().isAfter(entity.getStartDate()) || 
+            ((entity.getEndDate().isEqual(entity.getStartDate())) && (entity.getEndTime().isAfter(entity.getStartTime())))){
+                if(checkListOfDateEvents(getPlaceById(insertDTO.getIdPlace()), entity.getStartDate(), entity.getEndDate())){
+                    entity = eventRepository.save(entity);
+                    return new EventDTO(entity);
+                } 
+                else{
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "There is another event scheduled!");
+                }
             } 
             else 
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The closing event date must start after the starting date!");
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The closing event date must start after the starting date!");
         }
         else
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are no admin with the ID informed!");
@@ -106,18 +109,7 @@ public class EventService{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'dd-MM-yyyy'"); 
         }
     }
-
-    private Place getPlaceById(Long id){
-        try{
-            Place place = placeRepository.getOne(id);
-            return place;
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SLA"); 
-        }
-    }
-
+    
     public void delete(Long id) {
         try{
             Event event = eventRepository.getOne(id);   
@@ -132,5 +124,41 @@ public class EventService{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }  
     }
+    private Admin getAdminById(Long id){
+        try{
+            Admin adm = adminRepository.getOne(id);
+            return adm;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SLA"); 
+        }
+    }
 
+    private Place getPlaceById(Long id){
+        try{
+            Place place = placeRepository.getOne(id);
+            return place;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SLA"); 
+        }
+    }
+
+    private boolean checkListOfDateEvents(Place place, LocalDate startDateEvent, LocalDate endDateEvent){
+        
+        for(Event event: place.getEvents()){
+            if(event.getStartDate().isBefore(startDateEvent) && event.getEndDate().isAfter(startDateEvent)){
+                return false;
+            }
+            else if(event.getStartDate().isAfter(startDateEvent) && event.getEndDate().isBefore(endDateEvent)){
+                return false;
+            }
+            else if(event.getStartDate().isBefore(endDateEvent) && event.getEndDate().isAfter(endDateEvent)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

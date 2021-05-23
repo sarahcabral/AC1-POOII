@@ -1,12 +1,6 @@
 package com.atividades.ac1poo.entities;
-
-import com.atividades.ac1poo.dtos.EventInsertDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
-
+import com.atividades.ac1poo.dtos.EventInsertDTO;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.time.*;
@@ -64,7 +58,7 @@ public class Event implements Serializable{
         this.description = description;
         this.priceTicket = priceTicket;
     }
-    public Event(EventInsertDTO insertDTO, Admin adm) {
+    public Event(EventInsertDTO insertDTO, Admin adm, Place place) {
         setName(insertDTO.getName());
         setDescription(insertDTO.getDescription());
         setStartDate(insertDTO.getStartDate());
@@ -76,6 +70,7 @@ public class Event implements Serializable{
         setAmountPayedTickets(insertDTO.getAmountPayedTickets());
         setPriceTicket(insertDTO.getPriceTicket());
         setAdmin(adm);
+        addPlaces(place);
     }
     /**
      * ------------------

@@ -49,7 +49,12 @@ public class Ticket implements Serializable{
     public void setPrice(Double price) {
         this.price = price;
     }
-    
+    public TickerType getType() {
+        return type;
+    }
+    public void setType(TickerType type) {
+        this.type = type;
+    }
     /**
      * --------------------
      * @HashCode_and_Equals

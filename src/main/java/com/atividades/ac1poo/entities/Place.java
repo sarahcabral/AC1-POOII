@@ -1,7 +1,6 @@
 package com.atividades.ac1poo.entities;
 import java.io.Serializable;
 import javax.persistence.*;
-import java.time.*;
 import java.util.*;
 
 @Entity
@@ -55,8 +54,12 @@ public class Place implements Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
-    //COMPOSIÇÃO
+    public List<Event> getEvents(){
+        return events;
+    }
+
     public void addEvents(  Event event ){
+
         //                     String description,
         //                     LocalDate startDate,
         //                     LocalDate endDate,

@@ -1,12 +1,6 @@
 package com.atividades.ac1poo.dtos;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-import com.atividades.ac1poo.entities.Admin;
-import com.atividades.ac1poo.entities.Event;
+import java.time.*;
 
 public class EventUpdateDTO {
 

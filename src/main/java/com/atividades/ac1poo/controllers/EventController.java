@@ -1,18 +1,12 @@
 package com.atividades.ac1poo.controllers;
 
-import com.atividades.ac1poo.entities.*;
-import com.atividades.ac1poo.services.EventService;
-
-import java.net.URI;
-
-import com.atividades.ac1poo.dtos.EventDTO;
-import com.atividades.ac1poo.dtos.EventInsertDTO;
-import com.atividades.ac1poo.dtos.EventUpdateDTO;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.atividades.ac1poo.services.EventService;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import com.atividades.ac1poo.dtos.*;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/events")
