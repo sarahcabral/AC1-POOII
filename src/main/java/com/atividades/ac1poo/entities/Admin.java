@@ -1,5 +1,8 @@
 package com.atividades.ac1poo.entities;
 import javax.persistence.*;
+
+import com.atividades.ac1poo.dtos.AdminInsertDTO;
+
 import java.util.*;
 
 @Entity
@@ -25,6 +28,11 @@ public class Admin extends BaseUser{
     public Admin(Long id, String name, String email, Integer phoneNumber){
         super(id, name, email);
         this.phoneNumber = phoneNumber;
+    }
+    public Admin(AdminInsertDTO insertDTO) {
+        setName(insertDTO.getName());
+        setEmail(insertDTO.getEmail());
+        setPhoneNumber(insertDTO.getPhoneNumber());
     }
     /**
      * ------------------

@@ -19,6 +19,7 @@ public class EventDTO {
     private Admin admin;
     private String name;
     private String description;
+    private String email;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startDate;
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -39,13 +40,14 @@ public class EventDTO {
      */
     public EventDTO(){}
 
-    public EventDTO(Long id, Admin admin, String name, String description, LocalDate startDate, LocalDate endDate,
+    public EventDTO(Long id, Admin admin, String name, String description, String email, LocalDate startDate, LocalDate endDate,
     LocalTime startTime, LocalTime endTime, String emailContact, Long amountFreeTickets,
     Long amountPayedTickets, Double priceTicket) {
         this.id = id;
         this.admin = admin;
         this.name = name;
         this.description = description;
+        this.email = email;
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
@@ -60,6 +62,7 @@ public class EventDTO {
         setName(event.getName());
         // setAdmin(event.getAdmin());
         setDescription(event.getDescription());
+        setEmail(event.getEmailContact());
         setStartDate(event.getStartDate());
         setEndDate(event.getEndDate());
         setStartTime(event.getStartTime());
@@ -100,6 +103,12 @@ public class EventDTO {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public LocalDate getStartDate() {
         return startDate;

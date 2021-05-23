@@ -1,25 +1,16 @@
 package com.atividades.ac1poo.services;
 
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
+import com.atividades.ac1poo.repositories.*;
+import org.springframework.http.HttpStatus;
+import com.atividades.ac1poo.entities.*;
+import com.atividades.ac1poo.dtos.*;
 import java.time.LocalDate;
 import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
-
-import com.atividades.ac1poo.dtos.EventDTO;
-import com.atividades.ac1poo.dtos.EventInsertDTO;
-import com.atividades.ac1poo.dtos.EventUpdateDTO;
-import com.atividades.ac1poo.entities.Admin;
-import com.atividades.ac1poo.entities.Event;
-import com.atividades.ac1poo.entities.Place;
-import com.atividades.ac1poo.repositories.AdminRepository;
-import com.atividades.ac1poo.repositories.EventRepository;
-import com.atividades.ac1poo.repositories.PlaceRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class EventService{
@@ -52,7 +43,6 @@ public class EventService{
     }
 */
 
-
     public EventDTO getEventById(Long id) {
         Optional<Event> op = eventRepository.findById(id);
         Event event = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found anywhere. It may never have been scheduled"));
@@ -79,8 +69,7 @@ public class EventService{
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The closing event date must start after the starting date!");
         }
         else
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are no admin with the ID informed!");
-        
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are no admin with the ID informed!");  
     }
 
     public EventDTO update(Long id, EventUpdateDTO updateDTO) {
