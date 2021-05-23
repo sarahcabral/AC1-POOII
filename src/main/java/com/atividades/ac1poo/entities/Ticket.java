@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name="TB_TICKET")
 public class Ticket implements Serializable{
     
+    private static final long serialVersionUID = 1L;
+
     /**
      * ------------
      * @Declaration

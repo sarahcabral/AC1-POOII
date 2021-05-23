@@ -6,7 +6,8 @@ import com.atividades.ac1poo.dtos.AdminInsertDTO;
 import java.util.*;
 
 @Entity
-@Table(name="TB_ADMINS")
+@Table(name="TB_ADMIN")
+@PrimaryKeyJoinColumn(name="ID")
 public class Admin extends BaseUser{
 
     /**

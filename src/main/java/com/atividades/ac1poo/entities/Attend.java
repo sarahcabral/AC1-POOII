@@ -3,6 +3,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="TB_ATTENDEES")
+@PrimaryKeyJoinColumn(name="ID")
 public class Attend extends BaseUser{
 
     /**

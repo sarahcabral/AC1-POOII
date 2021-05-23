@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class BaseUser implements Serializable{
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * ------------
      * @Declaration
