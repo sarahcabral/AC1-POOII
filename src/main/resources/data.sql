@@ -9,9 +9,9 @@ INSERT INTO TB_ADMIN (id, phone_Number) VALUES (1L, 988295251);
 INSERT INTO TB_ADMIN (id, phone_Number) VALUES (2L, 988294658);
 INSERT INTO TB_ADMIN (id, phone_Number) VALUES (3L, 992845683);
 
-INSERT INTO TB_ATTEND (id, balance) VALUES (4L, 1800.00);
-INSERT INTO TB_ATTEND (id, balance) VALUES (5L, 280.00);
-INSERT INTO TB_ATTEND (id, balance) VALUES (6L, 750.00);
+INSERT INTO TB_ATTEND (id, balance) VALUES (4, 1800.00);
+INSERT INTO TB_ATTEND (id, balance) VALUES (5, 280.00);
+INSERT INTO TB_ATTEND (id, balance) VALUES (6, 750.00);
 
 INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description) VALUES ('2021-10-26', '2022-10-26', '15:00', '17:00', 'niver_aqui@email.com', 'Aniversario de 1 ano', 'Tema do Detona Ralf');
 INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description) VALUES ('2021-11-26', '2022-10-26', '18:00', '22:00', 'sarinhah@email.com', 'Aniversario de Joaquin', 'Tema do Wall-e');

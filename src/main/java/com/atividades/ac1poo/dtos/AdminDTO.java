@@ -26,6 +26,7 @@ public class AdminDTO {
     }
 
     public AdminDTO(Admin entity) {
+        setId(entity.getId());
         setName(entity.getName());
         setEmail(entity.getEmail());
         setPhoneNumber(entity.getPhoneNumber());

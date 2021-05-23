@@ -9,7 +9,7 @@ import com.atividades.ac1poo.dtos.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/events/{id}/tickets")
+@RequestMapping("/tickets")
 public class TicketController {
     
     /**
@@ -42,7 +42,7 @@ public class TicketController {
         return ResponseEntity.ok().body(list);
     }*/
     
-    @GetMapping
+    @GetMapping("{id}")
     public ResponseEntity<TicketDTO> getTicketById(@PathVariable Long id){
         TicketDTO dto = ticketService.getTicketById(id);
  

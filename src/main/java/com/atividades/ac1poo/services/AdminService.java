@@ -38,7 +38,7 @@ public class AdminService{
 
     public AdminDTO getAdminById(Long id) {
         Optional<Admin> op = adminRepository.findById(id);
-        Admin admin = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found anywhere. It may never have been scheduled"));
+        Admin admin = op.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin not found"));
         return new AdminDTO(admin);
     } 
 

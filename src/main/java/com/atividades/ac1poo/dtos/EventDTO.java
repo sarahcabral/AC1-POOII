@@ -59,6 +59,7 @@ public class EventDTO {
     }
 
     public EventDTO(Event event){
+        setId(event.getId());
         setName(event.getName());
         // setAdmin(event.getAdmin());
         setDescription(event.getDescription());

@@ -19,8 +19,7 @@ public class BaseUser implements Serializable{
     private Long id;
     private String name;
     private String email;
-
-
+    
     /**
      * -------------
      * @Constructors

@@ -26,6 +26,7 @@ public class PlaceDTO {
     }
 
     public PlaceDTO(Place entity) {
+        setId(entity.getId());
         setName(entity.getName());
         setAddress(entity.getAddress());
     }

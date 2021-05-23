@@ -60,7 +60,7 @@ public class Event implements Serializable{
         this.description = description;
         this.priceTicket = priceTicket;
     }
-    public Event(EventInsertDTO insertDTO, Admin adm, Place place) {
+    public Event(EventInsertDTO insertDTO, Admin adm) {
         setName(insertDTO.getName());
         setDescription(insertDTO.getDescription());
         setStartDate(insertDTO.getStartDate());
@@ -72,7 +72,6 @@ public class Event implements Serializable{
         setAmountPayedTickets(insertDTO.getAmountPayedTickets());
         setPriceTicket(insertDTO.getPriceTicket());
         setAdmin(adm);
-        addPlaces(place);
     }
     /**
      * ------------------

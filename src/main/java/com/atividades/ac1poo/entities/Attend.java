@@ -8,6 +8,7 @@ import com.atividades.ac1poo.dtos.AttendInsertDTO;
 @PrimaryKeyJoinColumn(name="ID")
 public class Attend extends BaseUser{
 
+    private static final long serialVersionUID = 1L;
     /**
      * ------------
      * @Declaration
@@ -26,10 +27,11 @@ public class Attend extends BaseUser{
         this.balance = balance;
     }
     
-    public Attend(AttendInsertDTO insetDTO){
-        setName(insetDTO.getName());
-        setEmail(insetDTO.getEmail());
-        setBalance(insetDTO.getBalance());
+    public Attend(AttendInsertDTO insertDTO){
+        setId(insertDTO.getId());
+        setName(insertDTO.getName());
+        setEmail(insertDTO.getEmail());
+        setBalance(insertDTO.getBalance());
     }
 
     /**

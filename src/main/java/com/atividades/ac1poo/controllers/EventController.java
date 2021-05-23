@@ -2,6 +2,10 @@ package com.atividades.ac1poo.controllers;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+
 import com.atividades.ac1poo.services.EventService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +29,7 @@ public class EventController {
      * @ROUTES
      * |||||||
      */
-    /*
+    
     @GetMapping
     public ResponseEntity<Page<EventDTO>> getEvents(
         @RequestParam(value = "page",         defaultValue = "0") Integer page,
@@ -33,14 +37,14 @@ public class EventController {
         @RequestParam(value = "direction",    defaultValue = "ASC") String direction,
         @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy, 
         @RequestParam(value = "name",         defaultValue = "") String name, 
-        @RequestParam(value = "place",        defaultValue = "") String place, 
         @RequestParam(value = "description",  defaultValue = "") String description, 
+        @RequestParam(value = "emailContact",  defaultValue = "") String emailContact, 
         @RequestParam(value = "startDate",    defaultValue = "") String startDate
     ) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-        Page <EventDTO> list = service.getEvents(pageRequest, name.trim(), place.trim(), description.trim(), startDate);
+        Page <EventDTO> list = eventService.getEvents(pageRequest, name.trim(), description.trim(), emailContact.trim(), startDate);
         return ResponseEntity.ok().body(list);
-    }*/
+    }
     
     @GetMapping("{id}")
     public ResponseEntity<EventDTO> getEventById(@PathVariable Long id){

@@ -28,6 +28,7 @@ public class TicketDTO {
     }
 
     public TicketDTO(Ticket entity) {
+        setId(entity.getId());
         setPrice(entity.getPrice());
         setType(entity.getType());
         setDate(entity.getDate());

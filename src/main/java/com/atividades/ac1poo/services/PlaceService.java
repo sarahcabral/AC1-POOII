@@ -48,16 +48,33 @@ public class PlaceService{
         return new PlaceDTO(entity);
     }
     
-    public void delete(Long id) {
+    public PlaceDTO update(Long id, PlaceUpdateDTO placeDTO) {
         try{
-            Place Place = catchPlaceById(id);
-            placeRepository.delete(Place);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
-        }  catch (EmptyResultDataAccessException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
+            Place entity = catchPlaceById(id);
+            if(!placeDTO.getAddress().isEmpty())       
+                entity.setAddress(placeDTO.getAddress());
+            if(!placeDTO.getName().isEmpty())       
+                entity.setName(placeDTO.getName());
+            return new PlaceDTO(entity);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERROR"); 
         }
     }
+
+    public void delete(Long id) {
+        try{
+            Place place = catchPlaceById(id);
+            if((place.getEvents()).isEmpty()){
+                placeRepository.delete(place);
+            }
+            else{
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "There has been already events scheduled in this Location!");
+            }
+        }  catch (EmptyResultDataAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ERROR");
+        }
+    }
+    
     private Place catchPlaceById(Long id){
         try{
             Place place = placeRepository.getOne(id);

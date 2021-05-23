@@ -2,6 +2,8 @@ package com.atividades.ac1poo.services;
 
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import com.atividades.ac1poo.entities.*;
 import com.atividades.ac1poo.dtos.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -23,25 +26,24 @@ public class EventService{
     
     @Autowired
     private PlaceRepository placeRepository;
-/*
-    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String data) {
+
+    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String description, String emailContact, String data) {
          
         if (data.isEmpty() || (data.length() < 1)) {
-            Page<Event> list = repo.find(pageRequest, name, place, description);
+            Page<Event> list = eventRepository.find(pageRequest, name, description, emailContact);
             return list.map( e -> new EventDTO(e));
         } else {
             try {         
-                //LocalDate startDate = LocalDate.parse(data, DateTimeFormatter.ISO_DATE);
                 DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
                 LocalDate startDate = LocalDate.parse(data, formato); 
-                Page<Event> list = repo.find(pageRequest, name, place, description, startDate);
+                Page<Event> list = eventRepository.find(pageRequest, name, description, emailContact, startDate);
                 return list.map( e -> new EventDTO(e));
             } catch (Exception e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'dd-MM-yyyy'");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong date format - Insert date in format 'dd-MM-yyyy'");
             }
         }       
     }
-*/
+
 
     public EventDTO getEventById(Long id) {
         Optional<Event> op = eventRepository.findById(id);
@@ -50,14 +52,23 @@ public class EventService{
     } 
 
     public EventDTO insert(EventInsertDTO insertDTO){
+        Place place = new Place();
         if((adminRepository.findById(insertDTO.getIdAdmin())) != null){
-            // Optional<Admin> opAdmin = adminRepository.findById(insertDTO.getIdAdmin());
-            // Admin adm = opAdmin.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown error..."));         
-            Event entity = new Event(insertDTO, getAdminById(insertDTO.getIdAdmin()), getPlaceById(insertDTO.getIdPlace()));
+                  
+            Event entity = new Event(insertDTO, getAdminById(insertDTO.getIdAdmin()));
+
+            if(insertDTO.getIdPlace() > 0){
+                entity.addPlaces(getPlaceById(insertDTO.getIdPlace()));
+                place = getPlaceById(insertDTO.getIdPlace());
+                place.addEvents(entity);
+            }
             
             if(entity.getEndDate().isAfter(entity.getStartDate()) || 
             ((entity.getEndDate().isEqual(entity.getStartDate())) && (entity.getEndTime().isAfter(entity.getStartTime())))){
                 if(checkListOfDateEvents(getPlaceById(insertDTO.getIdPlace()), entity.getStartDate(), entity.getEndDate())){
+                    if(insertDTO.getIdPlace() > 0){
+                        placeRepository.save(place);
+                    }
                     entity = eventRepository.save(entity);
                     return new EventDTO(entity);
                 } 
@@ -95,7 +106,7 @@ public class EventService{
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'dd-MM-yyyy'"); 
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong date format - Insert date in format 'dd-MM-yyyy'"); 
         }
     }
     
@@ -120,7 +131,7 @@ public class EventService{
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SLA"); 
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERROR"); 
         }
     }
 
@@ -131,7 +142,7 @@ public class EventService{
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "SLA"); 
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ERROR"); 
         }
     }
 
@@ -149,5 +160,5 @@ public class EventService{
             }
         }
         return true;
-    }
+    }   
 }

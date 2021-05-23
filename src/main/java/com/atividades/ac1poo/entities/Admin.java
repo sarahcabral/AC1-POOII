@@ -10,6 +10,7 @@ import java.util.*;
 @PrimaryKeyJoinColumn(name="ID")
 public class Admin extends BaseUser{
 
+    private static final long serialVersionUID = 1L;
     /**
      * ------------
      * @Declaration

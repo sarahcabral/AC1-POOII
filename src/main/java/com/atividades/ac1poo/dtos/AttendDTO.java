@@ -27,6 +27,7 @@ public class AttendDTO {
     }
 
     public AttendDTO(Attend entity) {
+        setId(entity.getId());
         setName(entity.getName());
         setEmail(entity.getEmail());
         setBalance(entity.getBalance());
