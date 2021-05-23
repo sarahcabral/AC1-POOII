@@ -1,6 +1,8 @@
 package com.atividades.ac1poo.entities;
 import javax.persistence.*;
 
+import com.atividades.ac1poo.dtos.AttendInsertDTO;
+
 @Entity
 @Table(name="TB_ATTENDEES")
 @PrimaryKeyJoinColumn(name="ID")
@@ -23,6 +25,13 @@ public class Attend extends BaseUser{
         super(id, name, email);
         this.balance = balance;
     }
+    
+    public Attend(AttendInsertDTO insetDTO){
+        setName(insetDTO.getName());
+        setEmail(insetDTO.getEmail());
+        setBalance(insetDTO.getBalance());
+    }
+
     /**
      * ------------------
      * @GettersAndSetters

@@ -3,6 +3,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.time.Instant;
 
+import com.atividades.ac1poo.dtos.TicketInsertDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -22,7 +23,7 @@ public class Ticket implements Serializable{
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Instant date;
     private Double price;
-    private TickerType type;
+    private TicketType type;
 
     /**
      * -------------
@@ -34,11 +35,23 @@ public class Ticket implements Serializable{
         this.date = date;
         this.price = price;
     }
+    public Ticket(TicketInsertDTO insertDTO) {
+        setDate(insertDTO.getDate());
+        setPrice(insertDTO.getPrice());
+        setType(insertDTO.getType());
+    }
     /**
      * --------------------
      * @Getters_and_Setters
      * --------------------
      */
+    
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Instant getDate() {
         return date;
     }
@@ -51,10 +64,10 @@ public class Ticket implements Serializable{
     public void setPrice(Double price) {
         this.price = price;
     }
-    public TickerType getType() {
+    public TicketType getType() {
         return type;
     }
-    public void setType(TickerType type) {
+    public void setType(TicketType type) {
         this.type = type;
     }
     /**
