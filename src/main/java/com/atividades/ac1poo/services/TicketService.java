@@ -16,25 +16,6 @@ public class TicketService{
    
     @Autowired
     private TicketRepository ticketRepository;
-/*
-    public Page<EventDTO> getEvents(PageRequest pageRequest, String name, String place, String description, String data) {
-         
-        if (data.isEmpty() || (data.length() < 1)) {
-            Page<Event> list = repo.find(pageRequest, name, place, description);
-            return list.map( e -> new EventDTO(e));
-        } else {
-            try {         
-                //LocalDate startDate = LocalDate.parse(data, DateTimeFormatter.ISO_DATE);
-                DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
-                LocalDate startDate = LocalDate.parse(data, formato); 
-                Page<Event> list = repo.find(pageRequest, name, place, description, startDate);
-                return list.map( e -> new EventDTO(e));
-            } catch (Exception e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de data incorreto - Inserir dados no formato 'dd-MM-yyyy'");
-            }
-        }       
-    }
-*/
 
     public TicketDTO getTicketById(Long id) {
         Optional<Ticket> op = ticketRepository.findById(id);
