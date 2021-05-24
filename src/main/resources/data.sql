@@ -13,9 +13,9 @@ INSERT INTO TB_ATTEND (id, balance) VALUES (4, 1800.00);
 INSERT INTO TB_ATTEND (id, balance) VALUES (5, 280.00);
 INSERT INTO TB_ATTEND (id, balance) VALUES (6, 750.00);
 
-INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description) VALUES ('2021-10-26', '2022-10-26', '15:00', '17:00', 'niver_aqui@email.com', 'Aniversario de 1 ano', 'Tema do Detona Ralf');
-INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description) VALUES ('2021-11-26', '2022-10-26', '18:00', '22:00', 'sarinhah@email.com', 'Aniversario de Joaquin', 'Tema do Wall-e');
-INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description) VALUES ('2021-12-26', '2022-10-26', '21:00', '23:00', 'janaubadosul@email.com', 'Aniversario de Rochele', 'Tema Harry Potter');
+INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description, amount_Free_Tickets, amount_Payed_Tickets, price_Ticket) VALUES ('2021-10-26', '2022-10-26', '15:00', '17:00', 'niver_aqui@email.com', 'Aniversario de 1 ano', 'Tema do Detona Ralf', 50, 185, 100.0);
+INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description, amount_Free_Tickets, amount_Payed_Tickets, price_Ticket) VALUES ('2021-11-26', '2022-10-26', '18:00', '22:00', 'sarinhah@email.com', 'Aniversario de Joaquin', 'Tema do Wall-e', 100, 1000, 500.0);
+INSERT INTO TB_EVENT (start_Date, end_Date, start_Time, end_Time, email_Contact, name, description, amount_Free_Tickets, amount_Payed_Tickets, price_Ticket) VALUES ('2021-12-26', '2022-10-26', '21:00', '23:00', 'janaubadosul@email.com', 'Aniversario de Rochele', 'Tema Harry Potter', 15, 40, 30.00);
 
 INSERT INTO TB_PLACE (name, address) VALUES ('Tomorrowland', 'Wall Street, Nº 1889');
 INSERT INTO TB_PLACE (name, address) VALUES ('Tomorrowland', 'Rua 3');

@@ -12,7 +12,6 @@ public class PlaceDTO {
     private Long id;
     private String name;
     private String address;
-    private Long idEvent;
 
     /**
      * @Constructors
@@ -22,7 +21,6 @@ public class PlaceDTO {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.idEvent = idEvent;
     }
 
     public PlaceDTO(Place entity) {
@@ -50,13 +48,6 @@ public class PlaceDTO {
     }
     public void setAddress(String address) {
         this.address = address;
-    }
-    public Long getIdEvent() {
-        return idEvent;
-    }
-    public void setIdEvent(Long idEvent) {
-        this.idEvent = idEvent;
-    }
-    
+    }    
 }
  

@@ -2,17 +2,17 @@ package com.atividades.ac1poo.services;
 
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import com.atividades.ac1poo.repositories.*;
 import org.springframework.http.HttpStatus;
+import java.time.format.DateTimeFormatter;
 import com.atividades.ac1poo.entities.*;
 import com.atividades.ac1poo.dtos.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -53,11 +53,13 @@ public class EventService{
 
     public EventDTO insert(EventInsertDTO insertDTO){
         Place place = new Place();
-        if((adminRepository.findById(insertDTO.getIdAdmin())) != null){
-                  
+        Optional test = adminRepository.findById(insertDTO.getIdAdmin());
+        if(test == test.empty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are no admin with the ID informed!");  
+        } else {          
             Event entity = new Event(insertDTO, getAdminById(insertDTO.getIdAdmin()));
 
-            if(insertDTO.getIdPlace() > 0){
+            if(insertDTO.getIdPlace() > 0L){
                 entity.addPlaces(getPlaceById(insertDTO.getIdPlace()));
                 place = getPlaceById(insertDTO.getIdPlace());
                 place.addEvents(entity);
@@ -66,8 +68,8 @@ public class EventService{
             if(entity.getEndDate().isAfter(entity.getStartDate()) || 
             ((entity.getEndDate().isEqual(entity.getStartDate())) && (entity.getEndTime().isAfter(entity.getStartTime())))){
                 if(checkListOfDateEvents(getPlaceById(insertDTO.getIdPlace()), entity.getStartDate(), entity.getEndDate())){
-                    if(insertDTO.getIdPlace() > 0){
-                        placeRepository.save(place);
+                    if(insertDTO.getIdPlace() > 0L){
+                       placeRepository.save(place);
                     }
                     entity = eventRepository.save(entity);
                     return new EventDTO(entity);
@@ -79,41 +81,53 @@ public class EventService{
             else 
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The closing event date must start after the starting date!");
         }
-        else
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are no admin with the ID informed!");  
+            
     }
 
     public EventDTO update(Long id, EventUpdateDTO updateDTO) {
-        try{
-            Event entity = eventRepository.getOne(id);
-            if(entity.getStartDate().isAfter(LocalDate.now())){
-                if(updateDTO.getIdPlace() != null)       
-                    entity.addPlaces(getPlaceById(updateDTO.getIdPlace()));
-                if(!updateDTO.getName().isEmpty())       
-                    entity.setName(updateDTO.getName());
-                if(!updateDTO.getDescription().isEmpty()) 
-                    entity.setDescription(updateDTO.getDescription());
-                if(updateDTO.getStartDate() != null) 
-                    entity.setStartDate(updateDTO.getStartDate());
-                if(updateDTO.getEndDate() != null) 
-                    entity.setEndDate(updateDTO.getEndDate());
-                if(updateDTO.getStartTime() != null) 
-                    entity.setStartTime(updateDTO.getStartTime());
-                if(updateDTO.getEndTime() != null) 
-                    entity.setEndTime(updateDTO.getEndTime());
+        Place place = new Place();
+        if((updateDTO.getEndDate().isAfter(updateDTO.getStartDate()) || 
+        ((updateDTO.getEndDate().isEqual(updateDTO.getStartDate())) && (updateDTO.getEndTime().isAfter(updateDTO.getStartTime()))))){
+            try{
+                Event entity = eventRepository.getOne(id);
+                    if(updateDTO.getIdPlace() > 0){
+                        entity.addPlaces(getPlaceById(updateDTO.getIdPlace()));
+                        place = getPlaceById(updateDTO.getIdPlace());
+                        place.addEvents(entity);
+                    }
+                    if(entity.getStartDate().isAfter(LocalDate.now())){
+                        if(updateDTO.getIdPlace() != null)       
+                            entity.addPlaces(getPlaceById(updateDTO.getIdPlace()));
+                        if(!updateDTO.getName().isEmpty())       
+                            entity.setName(updateDTO.getName());
+                        if(!updateDTO.getDescription().isEmpty()) 
+                            entity.setDescription(updateDTO.getDescription());
+                        if(updateDTO.getStartDate() != null) 
+                            entity.setStartDate(updateDTO.getStartDate());
+                        if(updateDTO.getEndDate() != null) 
+                            entity.setEndDate(updateDTO.getEndDate());
+                        if(updateDTO.getStartTime() != null) 
+                            entity.setStartTime(updateDTO.getStartTime());
+                        if(updateDTO.getEndTime() != null) 
+                            entity.setEndTime(updateDTO.getEndTime());
+                        if(updateDTO.getIdPlace() > 0){
+                            placeRepository.save(place);
+                        }
+                    }                
+                return new EventDTO(entity);
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong date format - Insert date in format 'dd-MM-yyyy'"); 
             }
-            return new EventDTO(entity);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong date format - Insert date in format 'dd-MM-yyyy'"); 
-        }
+        }else
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The closing event date must start after the starting date!");
     }
     
     public void delete(Long id) {
         try{
             Event event = eventRepository.getOne(id);   
-            if(event.getFreeTicketsSelled() <= 0 && event.getPayedTicketsSelled() <= 0){
+            if(event.getFreeTicketsSelled() == null && event.getPayedTicketsSelled() == null){
                 try {
                     eventRepository.deleteById(id);
                 } catch (EmptyResultDataAccessException e) {

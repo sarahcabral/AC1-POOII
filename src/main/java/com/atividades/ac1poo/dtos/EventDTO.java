@@ -1,12 +1,10 @@
 package com.atividades.ac1poo.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-import com.atividades.ac1poo.entities.Admin;
 import com.atividades.ac1poo.entities.Event;
+import java.time.*;
+
+
 
 public class EventDTO {
 
@@ -16,10 +14,9 @@ public class EventDTO {
      * ------------
      */ 
     private Long id;
-    private Admin admin;
     private String name;
+    private String adminName;
     private String description;
-    private String email;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startDate;
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -40,14 +37,13 @@ public class EventDTO {
      */
     public EventDTO(){}
 
-    public EventDTO(Long id, Admin admin, String name, String description, String email, LocalDate startDate, LocalDate endDate,
+    public EventDTO(Long id, String adminName, String name, String description, LocalDate startDate, LocalDate endDate,
     LocalTime startTime, LocalTime endTime, String emailContact, Long amountFreeTickets,
     Long amountPayedTickets, Double priceTicket) {
         this.id = id;
-        this.admin = admin;
+        this.adminName = adminName;
         this.name = name;
         this.description = description;
-        this.email = email;
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
@@ -61,9 +57,10 @@ public class EventDTO {
     public EventDTO(Event event){
         setId(event.getId());
         setName(event.getName());
-        // setAdmin(event.getAdmin());
+        if(event.getAdmin() != null){
+            setAdminName(event.getAdmin().getName());
+        }
         setDescription(event.getDescription());
-        setEmail(event.getEmailContact());
         setStartDate(event.getStartDate());
         setEndDate(event.getEndDate());
         setStartTime(event.getStartTime());
@@ -79,17 +76,16 @@ public class EventDTO {
      * ------------------
      */
     
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
     public Long getId() {
         return id;
     }
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -104,12 +100,6 @@ public class EventDTO {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
     public LocalDate getStartDate() {
         return startDate;
@@ -158,7 +148,6 @@ public class EventDTO {
     }
     public void setPriceTicket(Double priceTicket) {
         this.priceTicket = priceTicket;
-    }
-   
+    }   
 
 }
