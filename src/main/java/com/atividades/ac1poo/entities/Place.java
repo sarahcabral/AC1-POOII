@@ -68,31 +68,6 @@ public class Place implements Serializable{
     }
 
     public void addEvents(  Event event ){
-
-        //                     String description,
-        //                     LocalDate startDate,
-        //                     LocalDate endDate,
-        //                     LocalTime startTime,
-        //                     LocalTime endTime,
-        //                     String emailContact,
-        //                     Long amountFreeTickets,
-        //                     Long amountPayedTickets,
-        //                     Long freeTicketsSelled,
-        //                     Long payedTicketsSelled,
-        //                     Double priceTicket) {
-
-        // Event event = new Event();
-        // event.setDescription(description);
-        // event.setStartDate(startDate);
-        // event.setEndDate(endDate);
-        // event.setStartTime(startTime);
-        // event.setEndTime(endTime);
-        // event.setEmailContact(emailContact);
-        // event.setAmountFreeTickets(amountFreeTickets);
-        // event.setAmountPayedTickets(amountPayedTickets);
-        // event.setPayedTicketsSelled(payedTicketsSelled);
-        // event.setPriceTicket(priceTicket);
-        // this.events.add(event);
         this.events.add(event);
 
     }
