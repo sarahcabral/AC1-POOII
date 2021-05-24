@@ -59,7 +59,7 @@ public class EventService{
         } else {          
             Event entity = new Event(insertDTO, getAdminById(insertDTO.getIdAdmin()));
 
-            if(insertDTO.getIdPlace() > 0L){
+            if(insertDTO.getIdPlace() != null){
                 entity.addPlaces(getPlaceById(insertDTO.getIdPlace()));
                 place = getPlaceById(insertDTO.getIdPlace());
                 place.addEvents(entity);
@@ -67,16 +67,16 @@ public class EventService{
             
             if(entity.getEndDate().isAfter(entity.getStartDate()) || 
             ((entity.getEndDate().isEqual(entity.getStartDate())) && (entity.getEndTime().isAfter(entity.getStartTime())))){
-                if(checkListOfDateEvents(getPlaceById(insertDTO.getIdPlace()), entity.getStartDate(), entity.getEndDate())){
-                    if(insertDTO.getIdPlace() > 0L){
+                if(insertDTO.getIdPlace() != null){
+                    if(checkListOfDateEvents(getPlaceById(insertDTO.getIdPlace()), entity.getStartDate(), entity.getEndDate())){
                        placeRepository.save(place);
                     }
-                    entity = eventRepository.save(entity);
-                    return new EventDTO(entity);
+                    else{
+                        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "There is another event scheduled!");
+                    }
                 } 
-                else{
-                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "There is another event scheduled!");
-                }
+                entity = eventRepository.save(entity);
+                return new EventDTO(entity);
             } 
             else 
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The closing event date must start after the starting date!");
